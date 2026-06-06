@@ -51,23 +51,32 @@ void selectionSort(vector<int> &arr) {
 }
 
 // --- Heap Sort ---
-static void heapify(vector<int>& arr, int n, int i) {
-    int largest = i;
-    int l = 2 * i + 1;
-    int r = 2 * i + 2;
-    if (l < n && arr[l] > arr[largest]) largest = l;
-    if (r < n && arr[r] > arr[largest]) largest = r;
+// "Desce" o elemento i trocando-o com o maior filho enquanto não respeitar a regra pai >= filhos
+static void heapify(vector<int>& arr, int size, int i) {
+    int largest = i; // Começa assumindo que o pai é o maior
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    if (left < size && arr[left] > arr[largest]) largest = left;    // esquerdo é maior?
+    if (right < size && arr[right] > arr[largest]) largest = right; // direito é maior?
+    // Se nenhuma condição acima for verdadeira, o nó já está no lugar certo
+
     if (largest != i) {
         swap(arr[i], arr[largest]);
-        heapify(arr, n, largest);
+        heapify(arr, size, largest);
     }
 }
 
 void heapSort(vector<int>& arr) {
-    int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
-    for (int i = n - 1; i > 0; i--) {
+    int size = arr.size();
+
+    // Ao final, arr[0] contém o maior elemento de todo o array
+    for (int i = size / 2 - 1; i >= 0; i--)
+        heapify(arr, size, i);
+
+    // A cada iteração, arr[0] é o maior do heap ainda ativo
+    // Trocar com arr[i] coloca esse maior na posição final correta
+    // O heap encolhe (tamanho i)
+    for (int i = size - 1; i > 0; i--) {
         swap(arr[0], arr[i]);
         heapify(arr, i, 0);
     }
@@ -75,36 +84,70 @@ void heapSort(vector<int>& arr) {
 
 // --- Shell Sort ---
 void shellSort(vector<int>& arr) {
-    int n = arr.size();
-    for (int gap = n/2; gap > 0; gap /= 2) {
-        for (int i = gap; i < n; i ++) {
-            int temp = arr[i];
-            int j;            
-            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap){
-                arr[j] = arr[j - gap];
+    int size = arr.size();
+
+    // Sequência de Knuth: começa em 1 e cresce com h = 3h + 1 até o maior h menor que size/3
+    int h = 1;
+    while (h < size / 3) h = 3 * h + 1;
+
+    // Reduz h até chegar em 1, aplicando insertion sort com espaçamento h a cada rodada
+    while (h >= 1) {
+        // Insertion sort com espaçamento h
+        // i começa em h pois os primeiros h elementos já estão em seus subarrays de tamanho 1 (trivialmente ordenados)
+        for (int i = h; i < size; i++) {
+            int temp = arr[i]; // Elemento a ser inserido na posição correta
+            int j = i;
+
+            // Desloca elementos do subarray com espaçamento h que são maiores que temp
+            // para abrir espaço para a inserção de temp
+            while (j >= h && arr[j - h] > temp) {
+                arr[j] = arr[j - h];
+                j -= h;
             }
+
+            // Insere temp na posição correta dentro do subarray de gap h
             arr[j] = temp;
         }
+
+        h = (h - 1) / 3;  // Próximo h da sequência de Knuth (inverso de 3h+1)
     }
 }
 
 // --- Merge Sort ---
-void mergeHelper(vector<int>& arr, int left, int mid, int right){                
-    vector<int> L(arr.begin() + left, arr.begin() + mid + 1);
-    vector<int> R(arr.begin() + mid + 1, arr.begin() + right + 1);
+// MergeSort divide o array recursivamente ao meio e intercala os subarrays ordenados.
+void mergeHelper(vector<int>& arr, int left, int mid, int right) {
+    // Calcula o tamanho de cada metade
+    int leftArrSize  = mid - left + 1;
+    int rightArrSize = right - mid;
+
+    // Cria arrays temporários para cada metade
+    vector<int> L(leftArrSize), R(rightArrSize);
+
+    // Copia os elementos para os arrays temporários
+    for (int i = 0; i < leftArrSize; i++)  L[i] = arr[left + i];
+    for (int j = 0; j < rightArrSize; j++) R[j] = arr[mid + 1 + j];
+
     int i = 0, j = 0, k = left;
-    while (i < (int)L.size() && j < (int)R.size())
+
+    // Intercala os dois subarrays de volta em arr[left..right]
+    // Compara o menor elemento de cada metade e insere o menor
+    while (i < leftArrSize && j < rightArrSize)
         arr[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
-    while (i < (int)L.size()) arr[k++] = L[i++];
-    while (j < (int)R.size()) arr[k++] = R[j++];
+
+    // Copia os elementos restantes de L[], se houver
+    while (i < leftArrSize)  arr[k++] = L[i++];
+
+    // Copia os elementos restantes de R[], se houver
+    while (j < rightArrSize) arr[k++] = R[j++];
 }
 
+// Divide recursivamente o array e chama mergeHelper para ordenar
 void mergeSortRec(vector<int>& arr, int left, int right) {
-    if (left >= right) return;
-    int mid = left + (right - left) / 2;
-    mergeSortRec(arr, left, mid);
-    mergeSortRec(arr, mid + 1, right);
-    mergeHelper(arr, left, mid, right);
+    if (left >= right) return;           // Caso base: subarray de tamanho 0 ou 1 já está ordenado
+    int mid = left + (right - left) / 2; // Evita overflow ao calcular o meio
+    mergeSortRec(arr, left, mid);        // Ordena a metade esquerda
+    mergeSortRec(arr, mid + 1, right);   // Ordena a metade direita
+    mergeHelper(arr, left, mid, right);  // Intercala as duas metades ordenadas
 }
 
 void mergeSort(vector<int>& arr) {
@@ -112,30 +155,34 @@ void mergeSort(vector<int>& arr) {
 }
 
 // --- Quick Sort ---
+// Posiciona o pivô (mediana de três) em seu lugar definitivo
+// No final, tudo à esquerda de p é <= pivô, tudo à direita é > pivô
 int quickPartition(vector<int>& arr, int low, int high) {
     int mid = low + (high - low) / 2;
     // Ordena arr[low], arr[mid], arr[high] e coloca a mediana em arr[high]
     if (arr[low] > arr[mid])  swap(arr[low], arr[mid]);
     if (arr[low] > arr[high]) swap(arr[low], arr[high]);
     if (arr[mid] > arr[high]) swap(arr[mid], arr[high]);
-    swap(arr[mid], arr[high]);          // pivo vai para arr[high]
+    swap(arr[mid], arr[high]); // Pivo vai para arr[high]
     int pivot = arr[high];
-    int i = low - 1;
+    int i = low - 1; // i aponta para o último elemento menor ou igual ao pivô
+
     for (int j = low; j < high; j++) {
         if (arr[j] <= pivot) {
-            i++;
-            swap(arr[i], arr[j]);
+            swap(arr[++i], arr[j]); // Move elemento para a região <= pivô
         }
     }
-    swap(arr[i + 1], arr[high]);
+
+    swap(arr[i + 1], arr[high]); // Coloca o pivô em sua posição definitiva
     return i + 1;
 }
 
+// Divide e ordena recursivamente os subarrays à esquerda e à direita do pivô
 void quickSortRec(vector<int>& arr, int low, int high) {
-    if (low < high) {
+    if (low < high) {  // subarray com 2 ou mais elementos, continua dividindo
         int pi = quickPartition(arr, low, high);
-        quickSortRec(arr, low, pi - 1);
-        quickSortRec(arr, pi + 1, high);
+        quickSortRec(arr, low, pi - 1);  // Ordena elementos menores que o pivô
+        quickSortRec(arr, pi + 1, high); // Ordena elementos maiores que o pivô
     }
 }
 

@@ -1,8 +1,4 @@
-#include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <cmath>
-#include <chrono>
 #include <algorithm>
 
 using namespace std;
@@ -190,7 +186,3 @@ void quickSort(vector<int>& arr) {
     if ((int)arr.size() > 1)
         quickSortRec(arr, 0, (int)arr.size() - 1);
 }
-
-int main(){
-    
-};

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
 #include "sortingAlgorithms.h"
 #include "arrayGenerator.h"
 #include "printTable.h"
@@ -41,11 +42,20 @@ int main(){
         {"Aleatorio com repeticao", [&](int n) {return genRandomWithDup(n, rng);}},
     };
 
+    // Gera nome do arquivo com data e hora atual
+    time_t now = time(0);
+    tm* t = localtime(&now);
+    char filename[32];
+    strftime(filename, sizeof(filename), "resultados_%Y%m%d_%H%M%S.md", t);
+
     // Abre o arquivo resultados.md para escrita
-    ofstream mdFile("resultados.md");
+    ofstream mdFile(filename);
     mdFile << "# Analise Comparativa dos Metodos de Ordenacao\n\n";
     mdFile << "Tempos em **nanossegundos** (media filtrada de " << RUNS << " execucoes).  \n";
     mdFile << "Valores fora do intervalo `media +/- desvio padrao` sao descartados antes do calculo final.\n\n";
+
+    // Abre o arquivo arrays.txt para armazenar os arrays gerados durante a execucao atual (sobrescrito a cada execucao)
+    ofstream arraysFile("arrays.txt");
 
     for (Scenario& scenario : scenarios) {
         // Matriz de resultados 7 × 10 — 7 algoritmos, 10 tamanhos, results[algorithm_idx][size_idx]
@@ -57,16 +67,22 @@ int main(){
             // Gera o array original uma vez e todos os algoritmos recebem o mesmo array
             vector<int> original = scenario.gen(n);
 
+            // Salva o array gerado no arquivo
+            arraysFile << "[" << scenario.name << "] n=" << n << "\n";
+            for (int i = 0; i < n; i++)
+                arraysFile << original[i] << (i < n - 1 ? " " : "\n");
+            arraysFile << "\n";
+
             for (int algorithm_idx = 0; algorithm_idx < (int)algorithms.size(); algorithm_idx++) {
                 cerr << "[" << scenario.name << "] n=" << setw(6) << n
                      << " | " << left << setw(10) << algNames[algorithm_idx] << "\r";
                 cerr.flush();
-                
+
                 // Executa o algoritmo 10 vezes, guardando cada tempo
                 vector<double> times(RUNS);
                 for (int r = 0; r < RUNS; r++)
                     times[r] = (double) run(algorithms[algorithm_idx], original);
-                
+
                 // Calcula a média filtrada das 10 execuções e salva na posição [algoritmo][tamanho]
                 results[algorithm_idx][size_idx] = meanCalc(times);
             }
@@ -76,7 +92,9 @@ int main(){
         writeMdTable(mdFile, scenario.name, sizes, algNames, results); // imprime no arquivo .md
     }
 
+    arraysFile.close();
     mdFile.close();
-    cout << "\nResultados salvos em resultados.md\n";
+    cout << "\nResultados salvos em " << filename << "\n";
+    cout << "Arrays salvos em arrays.txt\n";
     return 0;
 }

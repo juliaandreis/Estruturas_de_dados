@@ -111,7 +111,7 @@ void shellSort(vector<int>& arr) {
 
 // --- Merge Sort ---
 // MergeSort divide o array recursivamente ao meio e intercala os subarrays ordenados.
-void mergeHelper(vector<int>& arr, int left, int mid, int right) {
+static void mergeHelper(vector<int>& arr, int left, int mid, int right) {
     // Calcula o tamanho de cada metade
     int leftArrSize  = mid - left + 1;
     int rightArrSize = right - mid;
@@ -138,7 +138,7 @@ void mergeHelper(vector<int>& arr, int left, int mid, int right) {
 }
 
 // Divide recursivamente o array e chama mergeHelper para ordenar
-void mergeSortRec(vector<int>& arr, int left, int right) {
+static void mergeSortRec(vector<int>& arr, int left, int right) {
     if (left >= right) return;           // Caso base: subarray de tamanho 0 ou 1 já está ordenado
     int mid = left + (right - left) / 2; // Evita overflow ao calcular o meio
     mergeSortRec(arr, left, mid);        // Ordena a metade esquerda
@@ -153,7 +153,7 @@ void mergeSort(vector<int>& arr) {
 // --- Quick Sort ---
 // Posiciona o pivô (mediana de três) em seu lugar definitivo
 // No final, tudo à esquerda de p é <= pivô, tudo à direita é > pivô
-int quickPartition(vector<int>& arr, int low, int high) {
+static int quickPartition(vector<int>& arr, int low, int high) {
     int mid = low + (high - low) / 2;
     // Ordena arr[low], arr[mid], arr[high] e coloca a mediana em arr[high]
     if (arr[low] > arr[mid])  swap(arr[low], arr[mid]);
@@ -174,7 +174,7 @@ int quickPartition(vector<int>& arr, int low, int high) {
 }
 
 // Divide e ordena recursivamente os subarrays à esquerda e à direita do pivô
-void quickSortRec(vector<int>& arr, int low, int high) {
+static void quickSortRec(vector<int>& arr, int low, int high) {
     if (low < high) {  // subarray com 2 ou mais elementos, continua dividindo
         int pi = quickPartition(arr, low, high);
         quickSortRec(arr, low, pi - 1);  // Ordena elementos menores que o pivô

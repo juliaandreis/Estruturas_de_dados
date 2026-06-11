@@ -27,7 +27,7 @@ vector<int> genRandomNoDup(int n, mt19937& rng) { // mt19937 é um gerador de n�
 
 vector<int> genRandomWithDup(int n, mt19937& rng) {
     vector<int> arr(n);
-    uniform_int_distribution<int> dist(1, max(1, n / 2)); // Gaarante distribuição uniforme dentro do intervalo
+    uniform_int_distribution<int> dist(1, max(1, n / 2)); // Garante distribuição uniforme dentro do intervalo
     // Como o intervalo é metade do tamanho do array, repetições são inevitáveis
 
     for (int& x : arr) x = dist(rng);

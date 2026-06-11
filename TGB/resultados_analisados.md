@@ -67,63 +67,63 @@ Valores fora do intervalo `media +/- desvio padrao` sao descartados antes do cal
 
 ### Crescente sem repeticao
 
-| n | Melhor algoritmo | Tempo (ns) |
-|--:|---|--:|
-| 128 | Bubble | 704 |
-| 256 | Bubble | 1.646 |
-| 512 | Bubble | 2.829 |
-| 1024 | Bubble | 2.548 |
-| 2048 | Bubble | 6.750 |
-| 4096 | Bubble | 8.729 |
-| 8192 | Bubble | 18.130 |
-| 16384 | Bubble | 35.523 |
-| 32768 | Bubble | 68.394 |
-| 65536 | Bubble | 157.738 |
+| n | Melhor algoritmo | Tempo (ns) | Pior algoritmo | Tempo (ns) |
+|--:|---|--:|---|--:|
+| 128 | Bubble | 704 | Merge | 149.468 |
+| 256 | Bubble | 1.646 | Merge | 253.021 |
+| 512 | Bubble | 2.829 | Selection | 746.851 |
+| 1024 | Bubble | 2.548 | Selection | 1.339.896 |
+| 2048 | Bubble | 6.750 | Selection | 4.924.724 |
+| 4096 | Bubble | 8.729 | Selection | 18.001.946 |
+| 8192 | Bubble | 18.130 | Selection | 70.951.993 |
+| 16384 | Bubble | 35.523 | Selection | 285.926.869 |
+| 32768 | Bubble | 68.394 | Selection | 1.147.010.472 |
+| 65536 | Bubble | 157.738 | Selection | 4.581.119.356 |
 
 ### Decrescente sem repeticao
 
-| n | Melhor algoritmo | Tempo (ns) |
-|--:|---|--:|
-| 128 | Shell | 4.089 |
-| 256 | Shell | 9.102 |
-| 512 | Shell | 17.982 |
-| 1024 | Shell | 38.500 |
-| 2048 | Shell | 89.769 |
-| 4096 | Shell | 170.912 |
-| 8192 | Shell | 356.694 |
-| 16384 | Shell | 956.510 |
-| 32768 | Shell | 1.855.361 |
-| 65536 | Shell | 3.825.875 |
+| n | Melhor algoritmo | Tempo (ns) | Pior algoritmo | Tempo (ns) |
+|--:|---|--:|---|--:|
+| 128 | Shell | 4.089 | Merge | 40.653 |
+| 256 | Shell | 9.102 | Bubble | 160.991 |
+| 512 | Shell | 17.982 | Bubble | 632.866 |
+| 1024 | Shell | 38.500 | Bubble | 2.505.505 |
+| 2048 | Shell | 89.769 | Bubble | 10.905.594 |
+| 4096 | Shell | 170.912 | Bubble | 40.013.863 |
+| 8192 | Shell | 356.694 | Bubble | 158.075.149 |
+| 16384 | Shell | 956.510 | Bubble | 647.995.266 |
+| 32768 | Shell | 1.855.361 | Bubble | 2.562.404.762 |
+| 65536 | Shell | 3.825.875 | Bubble | 9.885.878.042 |
 
 ### Aleatorio sem repeticao
 
-| n | Melhor algoritmo | Tempo (ns) |
-|--:|---|--:|
-| 128 | Quick | 4.370 |
-| 256 | Quick | 9.759 |
-| 512 | Quick | 23.505 |
-| 1024 | Quick | 54.531 |
-| 2048 | Quick | 139.281 |
-| 4096 | Quick | 339.422 |
-| 8192 | Quick | 770.496 |
-| 16384 | Quick | 1.653.417 |
-| 32768 | Quick | 3.521.394 |
-| 65536 | Quick | 7.509.656 |
+| n | Melhor algoritmo | Tempo (ns) | Pior algoritmo | Tempo (ns) |
+|--:|---|--:|---|--:|
+| 128 | Quick | 4.370 | Merge | 42.787 |
+| 256 | Quick | 9.759 | Bubble | 150.699 |
+| 512 | Quick | 23.505 | Bubble | 622.861 |
+| 1024 | Quick | 54.531 | Bubble | 2.585.390 |
+| 2048 | Quick | 139.281 | Bubble | 10.758.834 |
+| 4096 | Quick | 339.422 | Bubble | 43.589.625 |
+| 8192 | Quick | 770.496 | Bubble | 179.194.179 |
+| 16384 | Quick | 1.653.417 | Bubble | 749.030.509 |
+| 32768 | Quick | 3.521.394 | Bubble | 3.080.645.932 |
+| 65536 | Quick | 7.509.656 | Bubble | 12.742.561.118 |
 
 ### Aleatorio com repeticao
 
-| n | Melhor algoritmo | Tempo (ns) |
-|--:|---|--:|
-| 128 | Heap | 7.677 |
-| 256 | Shell | 15.991 |
-| 512 | Shell | 38.000 |
-| 1024 | Shell | 90.620 |
-| 2048 | Shell | 216.016 |
-| 4096 | Shell | 519.625 |
-| 8192 | Shell | 1.174.031 |
-| 16384 | Shell | 2.552.182 |
-| 32768 | Shell | 5.567.292 |
-| 65536 | 12509144 |
+| n | Melhor algoritmo | Tempo (ns) | Pior algoritmo | Tempo (ns) |
+|--:|---|--:|---|--:|
+| 128 | Quick | 5.398 | Merge | 42.972 |
+| 256 | Quick | 11.917 | Bubble | 148.685 |
+| 512 | Quick | 24.630 | Bubble | 621.479 |
+| 1024 | Quick | 64.880 | Bubble | 2.554.911 |
+| 2048 | Quick | 149.255 | Bubble | 10.516.911 |
+| 4096 | Quick | 330.731 | Bubble | 44.062.882 |
+| 8192 | Quick | 765.884 | Bubble | 182.201.780 |
+| 16384 | Quick | 1.730.120 | Bubble | 752.777.472 |
+| 32768 | Quick | 3.626.306 | Bubble | 3.113.239.423 |
+| 65536 | Quick | 7.745.477 | Bubble | 12.689.476.881 |
 
 ## Conclusão
 
@@ -131,12 +131,16 @@ De acordo com os resultados, pode-se afirmar que não existe um único algoritmo
 
 O Bubble Sort surpreendeu no cenário crescente, pois ele detecta que o array já está ordenado na primeira passagem e encerra, tornando-se O(n).
 
-O Shell Sort com a sequência de Knuth foi o mais eficiente no cenário decrescente e no aleatório com repetição.
+O Shell Sort com a sequência de Knuth foi o mais eficiente no cenário decrescente.
 
-O Quick Sort teve melhor performance nos cenários aleatórios, confirmando sua eficiência média O(n log n) na prática.
+O Quick Sort teve melhor performance nos cenários aleatórios, com e sem repetição, confirmando sua eficiência média O(n log n) na prática.
 
-O Selection Sort foi consistentemente o pior algoritmo em todos os cenários, sempre O(n²) independente do estado do array.
+O Insertion Sort, assim como o Bubble Sort, se beneficia de dados já ordenados, mas foi consistentemente mais lento que ele no cenário crescente. Nos cenários aleatório e decrescente superou o Bubble Sort, ficando porém entre os mais lentos junto com ele e o Selection Sort.
 
-O Merge Sort manteve comportamento estável e previsível em todos os cenários, mas seu overhead de alocação de memória temporária a cada chamada recursiva o tornou mais lento que Quick Sort e Shell Sort na maioria dos casos.
+O Selection Sort foi consistentemente O(n²) em todos os cenários, sem qualquer otimização para casos favoráveis, sendo o pior algoritmo no cenário crescente a partir de n=512. Já nos cenários decrescente e aleatório, o Bubble Sort foi o mais lento na maioria dos tamanhos, superando até o Selection Sort.
+
+O Heap Sort manteve desempenho estável O(n log n) em todos os cenários, sem overhead de memória extra como o Merge Sort, porém ainda mais lento que Quick Sort e Shell Sort na maioria dos casos.
+
+O Merge Sort manteve comportamento estável e previsível em todos os cenários, mas seu overhead de alocação de memória temporária a cada chamada recursiva o tornou mais lento que Quick Sort e Shell Sort na maioria dos casos, e foi inclusive o pior algoritmo em arrays pequenos (n=128 em todos os cenários e também n=256 no crescente), onde o custo de recursão pesa mais que o ganho da divisão e conquista.
 
 Então, para dados desconhecidos ou aleatórios, o Quick Sort é a melhor escolha. Para dados parcialmente ordenados ou com padrões específicos, algoritmos como Bubble Sort (crescente) e Shell Sort (decrescente) podem superar até os algoritmos teoricamente superiores.

@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <chrono>
+#include <functional>
+#include <random>
+#include <iomanip>
 #include "sortingAlgorithms.h"
 #include "arrayGenerator.h"
 #include "printTable.h"

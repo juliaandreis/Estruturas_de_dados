@@ -53,4 +53,8 @@ g++ main.cpp -o benchmark
 ./benchmark
 ```
 
-Os resultados serão impressos no terminal e salvos em `resultados.md`.
+Os resultados serão impressos no terminal e salvos em um arquivo com nome gerado automaticamente no formato `resultados_YYYYMMDD_HHMMSS.md`.
+
+## Análise
+
+O arquivo `resultados_analisados.md` contém uma análise mais completa feita manualmente, com tabelas indicando o método mais eficiente para cada cenário e tamanho de array, além de uma conclusão geral sobre o desempenho dos algoritmos.

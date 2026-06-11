@@ -6,9 +6,12 @@ using namespace std;
 // --- Bubble Sort ---
 void bubbleSort(vector<int>& arr) {
     int n = arr.size();
+    // Percorre todos os valores do array
     for (int i = 0; i < n - 1; i++) {
         bool swapped = false;
+        // Devido a complexidade de ordem quadrática este algoritmo não é recomendado devido ao baixa perfomance
         for (int j = 0; j < n - i - 1; j++) {
+            // Verifica se os elementos estão fora de ordem, se sim, troca os elementos de lugar
             if (arr[j] > arr[j + 1]) {
                 swap(arr[j], arr[j + 1]);
                 swapped = true;
@@ -21,14 +24,17 @@ void bubbleSort(vector<int>& arr) {
 // --- Insertion Sort ---
 void insertionSort(vector<int>& arr) {
     int n = arr.size();
+    // Percorre todos os valores do array, partindo do índice 1
     for (int i = 1; i < n; i++) {
-        int key = arr[i];
+        // Compara a chave com o valor anterior
+	int key = arr[i];
         int j = i - 1;
+        // Insere o valor no lugar correto no subarray a esquerda
         while (j >= 0 && arr[j] > key) {
             arr[j + 1] = arr[j];
             j--;
         }
-        arr[j + 1] = key;
+        arr[j + 1] = key; // A chave torna-se o próximo valor do subarray a direita
     }
 }
 

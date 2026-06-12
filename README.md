@@ -15,13 +15,17 @@ Os tempos são medidos em nanossegundos e calculados com base na média filtrada
 ## Estrutura do projeto
 
 ```
-trabalho/
-├── main.cpp              # benchmark principal
-├── sortingAlgorithms.h   # implementação dos 7 algoritmos de ordenação
-├── arrayGenerator.h      # geração dos arrays de teste
-├── mean.h                # cálculo da média filtrada
-├── printTable.h          # impressão dos resultados no terminal e em .md
-└── resultados.md         # resultados gerados após a execução
+.
+├── Makefile                # script de compilação
+├── README.md               # este arquivo
+├── arrays.txt              # arrays gerados na última execução
+├── resultados_analisados.md # análise final com conclusão e tabelas comparativas
+└── TGB/
+    ├── main.cpp                 # benchmark principal
+    ├── sortingAlgorithms.h/.cpp # 7 algoritmos de ordenação
+    ├── arrayGenerator.h/.cpp    # geração dos arrays de teste
+    ├── mean.h/.cpp              # cálculo da média filtrada
+    └── printTable.h/.cpp        # impressão dos resultados no terminal e em .md
 ```
 
 ## Cenários de teste
@@ -48,13 +52,35 @@ Para cada combinação de algoritmo, cenário e tamanho:
 
 ## Como compilar e executar
 
+A partir da raiz do projeto:
+
 ```bash
-g++ main.cpp -o benchmark
-./benchmark
+make
+./TGB/benchmark
 ```
 
-Os resultados serão impressos no terminal e salvos em um arquivo com nome gerado automaticamente no formato `resultados_YYYYMMDD_HHMMSS.md`.
+O `make` só recompila o que mudou. Se aparecer `make: Nothing to be done for 'all'`, significa que já está compilado e pronto para executar.
+
+Para forçar uma recompilação do zero:
+
+```bash
+make clean
+make
+```
+
+Compilação manual (sem Makefile):
+
+```bash
+g++ -std=c++17 -O2 -Wall -Wextra -I./TGB \
+    TGB/main.cpp TGB/arrayGenerator.cpp TGB/mean.cpp TGB/printTable.cpp TGB/sortingAlgorithms.cpp \
+    -o TGB/benchmark
+./TGB/benchmark
+```
+
+A execução produz dois arquivos na raiz do projeto:
+- `resultados_YYYYMMDD_HHMMSS.md` — tabelas de tempos por cenário (nome com data e hora da execução)
+- `arrays.txt` — arrays usados como entrada em cada cenário/tamanho (sobrescrito a cada execução)
 
 ## Análise
 
-O arquivo `resultados_analisados.md` contém uma análise mais completa feita manualmente, com tabelas indicando o método mais eficiente para cada cenário e tamanho de array, além de uma conclusão geral sobre o desempenho dos algoritmos.
+O arquivo `resultados_analisados.md` contém a análise final feita manualmente sobre os resultados, com tabelas indicando o método mais eficiente e o menos eficiente para cada cenário e tamanho de array, além de uma conclusão geral sobre o desempenho dos algoritmos.

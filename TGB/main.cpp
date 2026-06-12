@@ -58,7 +58,7 @@ int main(){
     mdFile << "Tempos em **nanossegundos** (media filtrada de " << RUNS << " execucoes).  \n";
     mdFile << "Valores fora do intervalo `media +/- desvio padrao` sao descartados antes do calculo final.\n\n";
 
-    // Abre o arquivo arrays.txt para armazenar os arrays gerados durante a execucao atual (sobrescrito a cada execucao)
+    // Abre o arquivo arrays.txt para armazenar os arrays gerados
     ofstream arraysFile("arrays.txt");
 
     for (Scenario& scenario : scenarios) {

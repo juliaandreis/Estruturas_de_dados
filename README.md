@@ -18,7 +18,7 @@ Os tempos são medidos em nanossegundos e calculados com base na média filtrada
 .
 ├── Makefile                # script de compilação
 ├── README.md               # este arquivo
-├── arrays.txt              # arrays gerados na última execução
+├── arrays.txt              # arrays gerados
 ├── resultados_analisados.md # análise final com conclusão e tabelas comparativas
 └── TGB/
     ├── main.cpp                 # benchmark principal
